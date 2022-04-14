@@ -24,6 +24,10 @@ object MostImportantRows extends App {
     "MV2",
     "VPV",
     "Others"
-  ).zipWithIndex.toDF("names", "id")
+  ).zipWithIndex.toDF("name", "id")
 
+  val output = input.join(names)
+    .where($"value" === $"name")
+
+  output.show
 }
