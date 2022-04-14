@@ -10,6 +10,7 @@ object MostImportantRows extends App {
     .getOrCreate()
 
   import spark.implicits._
+  import org.apache.spark.sql.functions._
 
   val input = Seq(
     (1, "MV1"),
@@ -17,5 +18,12 @@ object MostImportantRows extends App {
     (2, "VPV"),
     (2, "Others")).toDF("id", "value")
 
-  input.show
+
+  val names = Seq(
+    "MV1",
+    "MV2",
+    "VPV",
+    "Others"
+  ).zipWithIndex.toDF("names", "id")
+
 }
