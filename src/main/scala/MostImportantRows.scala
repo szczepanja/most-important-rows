@@ -18,16 +18,9 @@ object MostImportantRows extends App {
     (2, "VPV"),
     (2, "Others")).toDF("id", "value")
 
+  val addIndex = input.withColumn("index", monotonically_increasing_id + 0)
 
-  val names = Seq(
-    "MV1",
-    "MV2",
-    "VPV",
-    "Others"
-  ).zipWithIndex.toDF("name", "id")
+  val copyPriority = addIndex.withColumn("name", $"value")
 
-  val output = input.join(names)
-    .where($"value" === $"name")
-
-  output.show
+  copyPriority.show
 }
