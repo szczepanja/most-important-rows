@@ -22,7 +22,14 @@ object MostImportantRows extends App {
 
   val copyPriority = addIndex.withColumn("name", $"value")
 
-  val getVIP = copyPriority.groupBy("id").agg(min("index") as "vip")
+  val getVIP = copyPriority
+    .groupBy("id")
+    .agg(min("index") as "vip")
 
-  getVIP.show
+  val solution = getVIP.join(copyPriority.drop("id"))
+    .where($"vip" === $"index")
+    .select("id", "name")
+
+  solution.show
+
 }
