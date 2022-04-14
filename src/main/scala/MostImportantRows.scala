@@ -22,5 +22,7 @@ object MostImportantRows extends App {
 
   val copyPriority = addIndex.withColumn("name", $"value")
 
-  copyPriority.show
+  val getVIP = copyPriority.groupBy("id").agg(min("index") as "vip")
+
+  getVIP.show
 }
